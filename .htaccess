@@ -1,0 +1,13 @@
+##################################################################
+# You need to add the content of this file to your htaccess file #
+##################################################################
+
+# Redirect to PHP endpoints
+RewriteEngine on
+RewriteBase /
+RewriteRule ^compile /php/compile.php [L]
+RewriteRule ^run /php/run.php [L]
+RewriteRule ^fmt /php/fmt.php [L]
+
+#You may need to add the following line to activate compression :
+#AddOutputFilterByType DEFLATE application/json

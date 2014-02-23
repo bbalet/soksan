@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<title data-i18n="Example using the genuine playground.js file">Example using the genuine playground.js file</title>
+
+	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">		
+
+<h1>Nouveautés en approche !</h1>
+
+<p>Voici un exemple de code modifiable et exécutable :</p>
+
+<textarea id="code" style="width: 100%; font-family: monospace;">
+package main
+
+import "time"
+
+func main() {
+    println("Un")
+    timer := time.NewTimer(time.Second * 2)
+    <- timer.C
+    println("Timer expired")
+}
+</textarea>
+
+<p>
+<button type="button" id="run" class="btn btn-primary"><i class="icon-play icon-white"></i>&nbsp;Exécuter</button>
+<button type="button" id="fmt" class="btn btn-info"><i class="icon-indent-left icon-white"></i>&nbsp;Formatter</button>
+</p>
+
+<pre id="output" style="visibility:hidden"></pre>
+
+<p>Autre exemple de code non modifiable, mais exécutable :</p>
+
+<pre id="code2" style="width: 100%; font-family: monospace;">
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, playground")
+}
+</pre>
+
+<p>
+<button type="button" id="run2" class="btn btn-primary"><i class="icon-play icon-white"></i>&nbsp;Exécuter</button>
+</p>
+
+<pre id="output2" style="visibility:hidden"></pre>
+
+<script>
+	$(document).ready(function() {
+		initEditor($('#code'), $('#output'), $('#run'), $('#fmt'));
+		initEditor($('#code2'), $('#output2'), $('#run2'), null);
+	});
+</script>
+
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/i18next/1.6.3/i18next-1.6.3.min.js"></script>
+<script type="text/javascript" src="/js/myplayground.js"></script>
+
+<script>
+	$(function() {
+		initEditor($('#code'), $('#output'), $('#run'), $('#fmt'));
+		initEditor($('#code2'), $('#output2'), $('#run2'));
+	});
+</script>
+
+		</div>
+	</div>
+</div>

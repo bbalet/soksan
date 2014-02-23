@@ -1,0 +1,1 @@
+This folder contains go code samples, this file are not recquired by the plugin and this folder can be deleted

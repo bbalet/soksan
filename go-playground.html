@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<title data-i18n="Example using the genuine playground.js file">Example using the genuine playground.js file</title>
+
+	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">			
+
+<h1 data-i18n="Using playground.js">Using playground.js</h1>
+
+<p data-i18n="You can use the genuine playground.js script :">You can use the genuine playground.js script :</p>
+
+<textarea id="code" name="code" style="width: 100%; font-family: monospace;" rows="12">
+package main
+
+import "time"
+
+func main() {
+    println("Un")
+    timer := time.NewTimer(time.Second * 2)
+    <- timer.C
+    println("Timer expired")
+}
+</textarea>
+
+<p>
+<input type="button" id="run" class="btn btn-primary" data-i18n="Execute" value="Execute" />
+<input type="button" id="fmt" class="btn btn-info" data-i18n="Format" value="Format" />
+</p>
+
+<div id="output"></div>
+
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/i18next/1.6.3/i18next-1.6.3.min.js"></script>
+<script type="text/javascript" src="/js/playground.js"></script>
+	
+<script type="text/javascript">
+	$(function() {
+		//Initialize Go playground
+		playground({
+				'codeEl':       '#code',
+				'outputEl':     '#output',
+				'runEl':        '#run',
+				'fmtEl':        '#fmt'
+			});
+		
+		//Translate all translatable content
+		i18n.init(function(t) {
+			$("*[data-i18n]").i18n();
+		});
+	});
+</script>
+		</div>
+	</div>
+</div>
+
+	</body>
+</html>
