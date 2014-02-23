@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-	<title data-i18n="Example using the genuine playground.js file">Example using the genuine playground.js file</title>
+	<title>Example using the genuine playground.js file</title>
 
 	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"/>
@@ -15,9 +15,9 @@
 	<div class="row-fluid">
 		<div class="span12">			
 
-<h1 data-i18n="Using playground.js">Using playground.js</h1>
+<h1>Using playground.js</h1>
 
-<p data-i18n="You can use the genuine playground.js script :">You can use the genuine playground.js script :</p>
+<p>You can use the genuine playground.js script :</p>
 
 <textarea id="code" name="code" style="width: 100%; font-family: monospace;" rows="12">
 package main
@@ -33,15 +33,14 @@ func main() {
 </textarea>
 
 <p>
-<input type="button" id="run" class="btn btn-primary" data-i18n="Execute" value="Execute" />
-<input type="button" id="fmt" class="btn btn-info" data-i18n="Format" value="Format" />
+<input type="button" id="run" class="btn btn-primary" value="Execute" />
+<input type="button" id="fmt" class="btn btn-info" value="Format" />
 </p>
 
 <div id="output"></div>
 
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/i18next/1.6.3/i18next-1.6.3.min.js"></script>
 <script type="text/javascript" src="/js/playground.js"></script>
 	
 <script type="text/javascript">
@@ -53,11 +52,6 @@ func main() {
 				'runEl':        '#run',
 				'fmtEl':        '#fmt'
 			});
-		
-		//Translate all translatable content
-		i18n.init(function(t) {
-			$("*[data-i18n]").i18n();
-		});
 	});
 </script>
 		</div>

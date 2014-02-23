@@ -33,7 +33,9 @@
 		
 		btnRun.click(function() {
 			output.css('visibility', 'visible');
-			output.html("<img src='/images/ajax-loader.gif'>&nbsp;<i>En cours d'exécution</i><br />");
+			output.html("<img src='/images/ajax-loader.gif'>&nbsp;<i>Compiling...</i><br />");
+			output.trigger('show');
+			
 			var mydata;
 			var myurl = '/compile';
 			if (file) {
@@ -58,30 +60,29 @@
 						output.html("<span class='text-error'>" + data.Errors.replace("\n","<br />") + "</span>");
 					}
 					else {
-						var text = "<span class='text-info'>";
-						for (var i = 0; i < data.Events.length; i++) {
-							text += data.Events[i].Message + "<br />";
-						}
-						text += "</span>";
-						text += "<span class='muted'>Fin du programme.</span>";
-						output.html(text);
+						output.html('');
+						playback(output, data.Events);
 					}
 				},
 				error: function() {
-					output.html("<strong>Problème de communication avec le serveur</strong><br />");
+					output.html("<strong>Communication error</strong><br />");
 				}
 			});
 		});
 		
 		if (btnFormat) {
 			btnFormat.click(function() {
+				output.css('visibility', 'visible');
+				output.html("<img src='/images/ajax-loader.gif'>&nbsp;<i>Formatting...</i><br />");
+				output.trigger('show');
+			
 				$.ajax("/fmt", {
 				data: {"body":editor.text()},
 				type: "POST",
 				dataType: "json",
 				success: function(data) {
 				  if (data.Error) {
-					output.html("<strong>Problème de communication avec le serveur</strong><br />");
+					output.html("<strong>Communication error</strong><br />");
 					var text = "";
 					for (var i = 0; i < data.Errors.length; i++) {
 						text += data.Errors[i].Message + "<br />";
@@ -90,10 +91,84 @@
 				  } else {
 					editor.val(data.Body);
 					editor.trigger('propertychange');
+					output.html('Formatted');
 				  }
 				}
 			  });
 			});
 		}		
+	}
+
+//------------------------------------------------------------------------------
+//Most of the code below this line has been stolen from http://play.golang.org/
+	function playback(output, events) {
+		var timeout;
+		write(output, {Kind: 'start'});
+		function next() {
+			if (events.length === 0) {
+				write(output, {Kind: 'end'});
+				return;
+			}
+			var e = events.shift();
+			if (e.Delay === 0) {
+				write(output, {Kind: 'stdout', Body: e.Message});
+				next();
+				return;
+			}
+			timeout = setTimeout(function() {
+				write(output, {Kind: 'stdout', Body: e.Message});
+				next();
+			}, e.Delay / 1000000);
+		}
+		next();
+		return {
+			Stop: function() {
+				clearTimeout(timeout);
+			}
+		}
+	}
+	
+	function write(output, event) {
+		if (event.Kind == 'start') {
+			output.innerHTML = '';
+			return;
+		}
+
+		var cl = 'system';
+		if (event.Kind == 'stdout' || event.Kind == 'stderr')
+			cl = event.Kind;
+
+		var m = event.Body;
+		if (event.Kind == 'end') 
+			m = '\nProgram exited' + (m?(': '+m):'.');
+
+		if (m.indexOf('IMAGE:') === 0) {
+			var url = 'data:image/png;base64,' + m.substr(6);
+			var img = document.createElement('img');
+			img.src = url;
+			output.appendChild(img);
+			return;
+		}
+
+		// ^L clears the screen.
+		var s = m.split('\x0c');
+		if (s.length > 1) {
+			output.innerHTML = '';
+			m = s.pop();
+		}
+
+		m = m.replace(/&/g, '&amp;');
+		m = m.replace(/</g, '&lt;');
+		m = m.replace(/>/g, '&gt;');
+
+		var needScroll = (output.scrollTop + output.offsetHeight) == output.scrollHeight;
+
+		var span = document.createElement('span');
+		span.className = cl;
+		span.innerHTML = m;
+		output.append(span);
+
+		if (needScroll)
+			output.scrollTop = output.scrollHeight - output.offsetHeight;
 	}
 	

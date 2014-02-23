@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<title>Examples with custom playground.js and a modal output form</title>
+
+	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">		
+
+<h1>Custom playground and modal execution form</h1>
+
+<p>Example with a <tt>SPAN</tt> tag and a code executed into a modal form:</p>
+
+<pre><span id="code" style="width: 100%; font-family: monospace;">package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, playground")
+}
+</span>
+<p><button type="button" id="run" class="btn btn-primary pull-right"><i class="icon-play icon-white"></i>&nbsp;Execute</button><p>
+</pre>
+
+<div id="frmModal" style="display: none;" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>Execution window</h3>
+	</div>
+	<div class="modal-body">
+		<pre id="output"></pre>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/myplayground.js"></script>
+
+<script>
+	//style="visibility:hidden"
+	
+	//Trigger show/hide events when objects are shown
+	$('#output').on('show', function(){
+		$("#frmModal").modal();
+	});
+
+	//Init playground
+	$(function() {		
+		initEditor($('#code'), $('#output'), $('#run'));
+	});
+</script>
+
+		</div>
+	</div>
+</div>

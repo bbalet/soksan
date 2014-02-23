@@ -3,9 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-	<title>Example using a file on the server side</title>
-
+	<title>Examples</title>
 	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"/>
 </head>
@@ -13,31 +11,21 @@
 
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="span12">	
-		
-<h1>Custom file</h1>
+		<div class="span12">			
 
-<p>This example illustrates how to use a source file stored on the server. It is useful when you want to run a complete program althrough you just display a portion of code :</p>
+<h1>Examples</h1>
 
-<pre id="code" data-filename="sample.go" style="width: 100%; font-family: monospace;">
-fmt.Println("ជំរាបសួរ ?")
-</pre>
+<p>List of examples :</p>
 
-<p>
-<button type="button" id="run" class="btn btn-primary"><i class="icon-play icon-white"></i>&nbsp;Execute</button>
-</p>
-
-<pre id="output" style="visibility:hidden"></pre>
+<ul>
+	<li><a href="go-playground.html">Example using the genuine playground.js file</a></li>
+	<li><a href="custom-playground.html">Examples with a custom playground.js</a></li>
+	<li><a href="custom-playground-modal.html">Examples with custom playground.js and a modal output form</a></li>
+	<li><a href="file-playground.html">Example using a file on the server side</a></li>
+</ul>
 
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/myplayground.js"></script>
-
-<script>
-	$(function() {
-		initEditor($('#code'), $('#output'), $('#run'), null, true);
-	});
-</script>
 
 		</div>
 	</div>

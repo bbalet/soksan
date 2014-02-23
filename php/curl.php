@@ -1,5 +1,5 @@
 <?php
-/*  soksan allows you to interact with a go playground 
+/*  soksan allows you to embed a go playground in your website
     Copyright (C) 2014 Benjamin BALET
 
     This program is free software: you can redistribute it and/or modify
@@ -14,14 +14,30 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
-	
+
+/**
+ * Wrapper to send the POST parameters of the page
+ * @uses  postPlaygroundRequest()
+ * @param string $endpoint
+ * @return string JSON message sent back by the playground
+ */
 function sendPlaygroundRequest($endpoint) {
+	return postPlaygroundRequest($endpoint, $_POST);
+}
+
+/**
+ * Make a curl POST request to the configured go playground service and 
+ * @param string $source
+ * @param string $params
+ * @return string JSON message sent back by the playground
+ */
+function postPlaygroundRequest($endpoint, $params) {
 // Setup cURL
 $ch = curl_init(HOST_PLAYGROUND . '/' . $endpoint);
 curl_setopt_array($ch, array(
     CURLOPT_POST => TRUE,
     CURLOPT_RETURNTRANSFER => TRUE,
-    CURLOPT_POSTFIELDS => $_POST,
+    CURLOPT_POSTFIELDS => $params,
 	CURLOPT_USERAGENT => USER_AGENT
 ));
 
@@ -34,7 +50,7 @@ if($response === FALSE){
     die(curl_error($ch));
 }
 
-// Print directly the response
+// return the response as received
 header("Content-type: application/json; charset: utf-8");
-echo $response;
+return $response;
 }

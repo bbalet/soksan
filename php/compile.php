@@ -1,5 +1,5 @@
 <?php
-/*  soksan allows you to interact with a go playground 
+/*  soksan allows you to embed a go playground in your website
     Copyright (C) 2014 Benjamin BALET
 
     This program is free software: you can redistribute it and/or modify

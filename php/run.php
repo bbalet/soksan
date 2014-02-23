@@ -1,5 +1,5 @@
 <?php
-/*  soksan allows you to interact with a go playground 
+/*  soksan allows you to embed a go playground in your website
     Copyright (C) 2014 Benjamin BALET
 
     This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,7 @@ include 'config.php';
 include 'curl.php';
 
 // Make a custom request by filling body variable with the content of a designated file
-array_push($_POST, 'version', '2');
-array_push($_POST, 'body', file_get_contents(SAMPLES_PATH . $_POST['file']));
-unset($_POST['file']);	//Don't bothe Go playground with extra parameters
-
-//echo var_dump($_POST);
+$data = array('version' => '2', 'body' => file_get_contents(SAMPLES_PATH . $_POST['file']));
 
 // Send a compile request
-echo sendPlaygroundRequest('compile');
+echo postPlaygroundRequest('compile', $data);

@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-	<title data-i18n="Example using the genuine playground.js file">Example using the genuine playground.js file</title>
+	<title>Examples with custom a playground.js</title>
 
 	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet"/>
@@ -15,9 +15,9 @@
 	<div class="row-fluid">
 		<div class="span12">		
 
-<h1>Nouveautés en approche !</h1>
+<h1>Using a custom playground javascript</h1>
 
-<p>Voici un exemple de code modifiable et exécutable :</p>
+<p>Example of editable and runnable program :</p>
 
 <textarea id="code" style="width: 100%; font-family: monospace;">
 package main
@@ -33,13 +33,13 @@ func main() {
 </textarea>
 
 <p>
-<button type="button" id="run" class="btn btn-primary"><i class="icon-play icon-white"></i>&nbsp;Exécuter</button>
-<button type="button" id="fmt" class="btn btn-info"><i class="icon-indent-left icon-white"></i>&nbsp;Formatter</button>
+<button type="button" id="run" class="btn btn-primary"><i class="icon-play icon-white"></i>&nbsp;Executer</button>
+<button type="button" id="fmt" class="btn btn-info"><i class="icon-indent-left icon-white"></i>&nbsp;Format</button>
 </p>
 
 <pre id="output" style="visibility:hidden"></pre>
 
-<p>Autre exemple de code non modifiable, mais exécutable :</p>
+<p>Another example with a <tt>PRE</tt> tag :</p>
 
 <pre id="code2" style="width: 100%; font-family: monospace;">
 package main
@@ -52,21 +52,13 @@ func main() {
 </pre>
 
 <p>
-<button type="button" id="run2" class="btn btn-primary"><i class="icon-play icon-white"></i>&nbsp;Exécuter</button>
+<button type="button" id="run2" class="btn btn-primary"><i class="icon-play icon-white"></i>&nbsp;Execute</button>
 </p>
 
 <pre id="output2" style="visibility:hidden"></pre>
 
-<script>
-	$(document).ready(function() {
-		initEditor($('#code'), $('#output'), $('#run'), $('#fmt'));
-		initEditor($('#code2'), $('#output2'), $('#run2'), null);
-	});
-</script>
-
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/i18next/1.6.3/i18next-1.6.3.min.js"></script>
 <script type="text/javascript" src="/js/myplayground.js"></script>
 
 <script>

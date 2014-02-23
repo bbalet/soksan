@@ -1,6 +1,6 @@
 package main
 
-/*  soksan allows you to interact with a go playground 
+/*  soksan allows you to embed a go playground in your website
     Copyright (C) 2014 Benjamin BALET
 
     This program is free software: you can redistribute it and/or modify
@@ -59,8 +59,9 @@ var store *sessions.FilesystemStore
 // main runs the program as a service or as a command line tool.
 // Several verbs allows you to install, start, stop or remove the service.
 // "run" verb allows you to run the program as a command line tool.
-// e.g. "goServerView install" installs the service
-// e.g. "goServerView run" starts the program from the console (blocking)
+// e.g. "soksan install" installs the service
+// e.g. "soksan start" starts the service
+// e.g. "soksan run" starts the program from the console (blocking)
 func main() {
 	s, err := service.NewService(name, displayName, desc)
 	if err != nil {
