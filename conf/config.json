@@ -3,6 +3,6 @@
 	"Secured": false,
 	"Compression": true,
 	"HostPlayGround": "http://play.golang.org/",
-	"UserAgent": "decouvrir-golang.net",
+	"UserAgent": "soksan",
 	"SamplePath": "gocode"
 }
