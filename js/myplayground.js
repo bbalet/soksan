@@ -22,12 +22,12 @@
 	
 		//Set the height of the editor with the length of code
 		if (editor.prop("tagName") == "TEXTAREA") {
-			editor.height(0);
-			editor.height($('#code').prop('scrollHeight'));
+			editor.height(12);
+			editor.height(editor.prop('scrollHeight'));
 			//Automatically update the height of the editor on any change
 			editor.bind('input propertychange', function() {
-				editor.height( 0 );
-				editor.height( $('#code').prop('scrollHeight') );
+				editor.height(12);
+				editor.height(editor.prop('scrollHeight'));
 			});
 		}
 		
