@@ -2,7 +2,7 @@
 	"Port": ":80",
 	"Secured": false,
 	"Compression": true,
-	"HostPlayGround": "http://play.golang.org/",
+	"HostPlayGround": "http://play.golang.org",
 	"UserAgent": "soksan",
 	"SamplePath": "gocode"
 }

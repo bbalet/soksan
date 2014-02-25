@@ -20,17 +20,14 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
 	"os"
-	"compress/gzip"
-	"io"
-	"strings"
 	"fmt"
 	"encoding/json"
+	"path/filepath"
 	
 	"bitbucket.org/kardianos/osext"
-	"bitbucket.org/kardianos/service"	
-	"github.com/gorilla/mux"
+	"bitbucket.org/kardianos/service"
+	"github.com/bbalet/soksan/soksan"
 )
 
 type Configuration struct {
@@ -42,19 +39,21 @@ type Configuration struct {
 	SamplePath		string
 }
 
-var config Configuration
-var CONFIGURATION_FILE string
-var PRIVATE_KEY_FILE string
-var CERTIFICATE_FILE string
-var DATA_FOLDER string
-var XP string
+var (	//Global variables
+	config Configuration
+	CONFIGURATION_FILE string
+	PRIVATE_KEY_FILE string
+	CERTIFICATE_FILE string
+	XP string
+)
 
-var logSrv service.Logger
-var name = "soksan"
-var displayName = "Go playground mediator"
-var desc = "soksan allows you to interact with a go playground"
-var isService bool = true
-var store *sessions.FilesystemStore
+var ( // Initialization Variables for the system service
+	logSrv service.Logger
+	name = "soksan"
+	displayName = "Go playground mediator"
+	desc = "soksan allows you to embed a go playground in your website"
+	isService bool = true
+)
 
 // main runs the program as a service or as a command line tool.
 // Several verbs allows you to install, start, stop or remove the service.
@@ -131,7 +130,6 @@ func doWork() {
 	CONFIGURATION_FILE = XP + "/conf/config.json"
 	PRIVATE_KEY_FILE = XP + "/conf/private.pem"
 	CERTIFICATE_FILE = XP + "/conf/cacert.pem"
-	DATA_FOLDER = XP + "/data/"
 
 	file, err := ioutil.ReadFile(CONFIGURATION_FILE)
 	if err != nil {
@@ -139,16 +137,17 @@ func doWork() {
 	}
 	json.Unmarshal(file, &config)
 
+	//Init soksan lib
+	soksan.Compression = config.Compression
+	soksan.HostPlayGround = config.HostPlayGround
+	soksan.SamplePath = filepath.Join(XP, config.SamplePath)
+	soksan.UserAgent = config.UserAgent
+	
 	//Start the embedded web server
 	logInfo("Start the embedded web server")
 
 	//Define the web application routes
-	r := mux.NewRouter()
-	r.HandleFunc("/fmt", makeHandler(fmtHandler))
-	r.HandleFunc("/compile", makeHandler(compileShareHandler))
-	r.HandleFunc("/run", makeHandler(runHandler))
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir(XP)))
-	http.Handle("/", r)
+	http.Handle("/", http.FileServer(http.Dir(XP)))
 
 	logInfo("Listening on %s\n", config.Port)
 	if config.Secured {
@@ -203,78 +202,3 @@ func checkHttpError(err error, w http.ResponseWriter) {
 		logFatal("%v", err)
 	}
 }
-
-// makeHandler serves GZIP content
-func makeHandler(fn func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
-			fn(w, r)
-			return
-		}
-		w.Header().Set("Content-Encoding", "gzip")
-		gz := gzip.NewWriter(w)
-		defer gz.Close()
-		gzr := gzipResponseWriter{Writer: gz, ResponseWriter: w}
-		fn(gzr, r)
-	}
-}
-
-type gzipResponseWriter struct {
-	io.Writer
-	http.ResponseWriter
-}
-
-func (w gzipResponseWriter) Write(b []byte) (int, error) {
-	if "" == w.Header().Get("Content-Type") {
-		// If no content type, apply sniffing algorithm to un-gzipped body.
-		w.Header().Set("Content-Type", http.DetectContentType(b))
-	}
-	return w.Writer.Write(b)
-}
-
-
-//------------------------------------------------------------------------------
-// Web handlers
-//------------------------------------------------------------------------------
-
-// fmtHandler is the HTTP Handler of the formatting service
-func fmtHandler(w http.ResponseWriter, r *http.Request) {
-	
-	
-//	checkHttpError(err, w)
-	w.Header().Set("Content-type", "application/json; charset: utf-8")
-}
-
-// compileShareHandler is the HTTP Handler of the compilation service
-func compileShareHandler(w http.ResponseWriter, r *http.Request) {
-	form := url.Values{}
-	err := r.ParseForm()
-	checkHttpError(err, w)
-	for k, v := range r.Form {
-		form.Add(k, v)
-	}
-	client := &http.Client{}
-	req, err := http.NewRequest("POST", config.HostPlayGround + "/compile", nil)
-	checkHttpError(err, w)
-	req.Header.Set("User-Agent", config.UserAgent)
-	resp, err := client.PostForm(config.HostPlayGround + "/compile", form)
-	checkHttpError(err, w)
-	
-	//config.UserAgent
-	//w.Header().Set("Content-type", "application/json; charset: utf-8")
-	//resp, err := http.PostForm(config.HostPlayGround + "/compile", v)
-	//checkHttpError(err, w)
-	w.Header().Set("Content-type", "application/json; charset: utf-8")
-	
-	fmt.Fprint(r, resp)
-}
-
-// runHandler is the HTTP Handler of the compilation service variant
-// it sends a go source file stored on the server instead of a web object content
-func runHandler(w http.ResponseWriter, r *http.Request) {
-	
-	
-	//checkHttpError(err, w)
-	w.Header().Set("Content-type", "application/json; charset: utf-8")
-}
-
