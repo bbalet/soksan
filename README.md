@@ -44,6 +44,7 @@ You need to initialize the library :
 * <code>soksan.SamplePath</code> : Source path of go code samples stored on your server '../gocode/' (for <code>run</code> endpoint).
 
 It is your responsability to start the web server as it is illustrated into main.go example. If you want to play with this code example, compile it and run it with these commands (you may modify config/config.json to suit your needs first) :
+
 <code>
 go build .<br />
 soksan run
