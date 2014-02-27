@@ -5,7 +5,7 @@
 
 # Why ?
 
-The official Playground website doesn't set any *-Origin header and doesn't implement CORS mechanism. So it is not possible to emit a JSON request from a Javascript belonging to your domain and that targets playground domain (this configuration is called "cross domain request"). In such a context, you need a mediator server application that will receive the JSON requests of your application and reroute them to the playground service. That is why *soksan* has been developed. It contains server code and client code samples that you can directly use in your own web site.
+The official Playground website doesn't set any <code>Origin</code> header and doesn't implement CORS mechanism. So it is not possible to emit a JSON request from a Javascript belonging to your domain and that targets playground domain (this configuration is called "cross domain request"). In such a context, you need a mediator server application that will receive the JSON requests of your application and reroute them to the playground service. That is why *soksan* has been developed. It contains server code and client code samples that you can directly use in your own web site.
 
 # Usage
 
@@ -67,9 +67,27 @@ http://decouvrir-golang.net/generalites/des-nouvelles-du-front-annee-2014.html
 
 ### Usage
 
-Create the editor :
-* If you are using the genuine playground.js, it must be a TEXTAREA
-* Otherwise, any container
+* Create the editor :
+** If you are using the genuine playground.js, it must be a TEXTAREA
+** Otherwise, any container
+* Create an ouput DIV
+* Create an Execute button
+* Optionally, create a format button
+* Insert a Javascript code that initializes the components
 
+<code>
+	$(function() {
+		//Example with a code editor, output container, run button and a format button
+		initEditor($('#code'), $('#output'), $('#run'), $('#fmt'));
+	});
+</code>
 
+If you want to display a portion of code but compile a file stored on the server side, add a <code>data-file</code> attribute to the code editor and pass it to the inti function :
+
+<code>
+	$(function() {
+		//Example with a code editor, output container, run button and a data-file attribute
+		initEditor($('#code'), $('#output'), $('#run'), null, true);
+	});
+</code>
 
