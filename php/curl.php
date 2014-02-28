@@ -27,6 +27,9 @@ function sendPlaygroundRequest($endpoint) {
 
 /**
  * Make a curl POST request to the configured go playground service and 
+ * return the result. This function modifies the header of the response :
+ *  - HTTP status
+ *  - Content-type
  * @param string $source
  * @param string $params
  * @return string JSON message sent back by the playground
@@ -50,7 +53,12 @@ if($response === FALSE){
     die(curl_error($ch));
 }
 
-// return the response as received
+// Repeat HTTP status code received from playground
+$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+http_response_code($http_status);
+
+// Return the response as received
 header("Content-type: application/json; charset: utf-8");
 return $response;
 }
