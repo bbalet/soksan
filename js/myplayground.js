@@ -75,9 +75,15 @@
 				output.css('visibility', 'visible');
 				output.html("<img src='/images/ajax-loader.gif'>&nbsp;<i>Formatting...</i><br />");
 				output.trigger('show');
+				
+				var code = "";
+				if (editor.prop("tagName") == "TEXTAREA")
+					code = editor.val();
+				else
+					code = editor.text();
 			
 				$.ajax("/fmt", {
-				data: {"body":editor.text()},
+				data: {"body":code},
 				type: "POST",
 				dataType: "json",
 				success: function(data) {
